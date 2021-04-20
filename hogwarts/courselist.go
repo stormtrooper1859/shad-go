@@ -4,29 +4,29 @@ package hogwarts
 
 func GetCourseList(prereqs map[string][]string) []string {
 	result := make([]string, 0)
-	result_map := make(map[string]bool, 0)
+	resultMap := make(map[string]bool, 0)
 
 	for k := range prereqs {
-		dfs(&prereqs, &result_map, &result, k)
+		dfs(prereqs, resultMap, &result, k)
 	}
 
 	return result
 }
 
-func dfs(prereqs *map[string][]string, result_map *map[string]bool, result *[]string, vertex string) {
-	in_result, entered := (*result_map)[vertex]
-	if in_result {
+func dfs(prereqs map[string][]string, resultMap map[string]bool, result *[]string, vertex string) {
+	inResult, entered := resultMap[vertex]
+	if inResult {
 		return
 	}
 	if entered {
 		panic("cyclical dependence")
 	}
-	(*result_map)[vertex] = false
+	resultMap[vertex] = false
 
-	for _, v := range (*prereqs)[vertex] {
-		dfs(prereqs, result_map, result, v)
+	for _, v := range prereqs[vertex] {
+		dfs(prereqs, resultMap, result, v)
 	}
 
-	(*result_map)[vertex] = true
+	resultMap[vertex] = true
 	*result = append(*result, vertex)
 }
