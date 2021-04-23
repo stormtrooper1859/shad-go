@@ -26,6 +26,7 @@ func main() {
 		s, err := ioutil.ReadAll(resp.Body)
 		check(err)
 
+		_ = resp.Body.Close()
 		fmt.Println(string(s))
 	}
 }
