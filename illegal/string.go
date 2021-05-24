@@ -2,6 +2,8 @@
 
 package illegal
 
+import "unsafe"
+
 func StringFromBytes(b []byte) string {
-	panic("implement me")
+	return *(*string)(unsafe.Pointer(&b))
 }
