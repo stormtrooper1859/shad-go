@@ -143,9 +143,9 @@
   start:    25-02-2021 18:00
   deadline: 07-03-2021 23:59
   tasks:
-    - task: otp
+    - task: otp +
       score: 100
-    - task: lrucache
+    - task: lrucache +
       score: 100
     - task: externalsort
       score: 100
@@ -156,32 +156,32 @@
   start:    18-02-2021 18:00
   deadline: 28-02-2021 23:59
   tasks:
-    - task: hotelbusiness
+    - task: hotelbusiness +
       score: 100
-    - task: hogwarts
+    - task: hogwarts +
       score: 100
-    - task: utf8
+    - task: utf8 +
       score: 100
     - task: varfmt
       score: 100
-    - task: speller
+    - task: speller +
       score: 100
     - task: ciletters
       score: 100
-    - task: forth
+    - task: forth +
       score: 100
 
 - group:    Hello World
   start:    11-02-2021 18:00
   deadline: 22-02-2021 23:59
   tasks:
-    - task: sum
+    - task: sum +
       score: 100
-    - task: tour0
+    - task: tour0 +
       score: 100
-    - task: wordcount
+    - task: wordcount +
       score: 100
-    - task: urlfetch
+    - task: urlfetch +
       score: 100
-    - task: fetchall
+    - task: fetchall +
       score: 100
