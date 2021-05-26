@@ -147,7 +147,7 @@
       score: 100
     - task: lrucache +
       score: 100
-    - task: externalsort
+    - task: externalsort +
       score: 100
     - task: retryupdate
       score: 100
