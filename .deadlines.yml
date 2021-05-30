@@ -127,7 +127,7 @@
       score: 100
     - task: rwmutex +
       score: 100
-    - task: waitgroup
+    - task: waitgroup +
       score: 100
     - task: ratelimit
       score: 100

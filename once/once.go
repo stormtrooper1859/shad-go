@@ -10,10 +10,12 @@ type Once struct {
 
 // New creates Once.
 func New() *Once {
-	return &Once{
+	once := Once{
 		enterCZ:   make(chan struct{}, 1),
 		completed: make(chan struct{}),
 	}
+	once.enterCZ <- struct{}{}
+	return &once
 }
 
 // Do calls the function f if and only if Do is being called for the
@@ -33,7 +35,7 @@ func New() *Once {
 //
 func (o *Once) Do(f func()) {
 	select {
-	case o.enterCZ <- struct{}{}:
+	case <-o.enterCZ:
 		defer close(o.completed)
 		f()
 	case <-o.completed:
