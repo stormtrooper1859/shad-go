@@ -123,9 +123,9 @@
   tasks:
     - task: tour1
       score: 100
-    - task: once
+    - task: once +
       score: 100
-    - task: rwmutex
+    - task: rwmutex +
       score: 100
     - task: waitgroup
       score: 100

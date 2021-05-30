@@ -4,11 +4,16 @@ package once
 
 // Once describes an object that will perform exactly one action.
 type Once struct {
+	enterCZ   chan struct{}
+	completed chan struct{}
 }
 
 // New creates Once.
 func New() *Once {
-	return nil
+	return &Once{
+		enterCZ:   make(chan struct{}, 1),
+		completed: make(chan struct{}),
+	}
 }
 
 // Do calls the function f if and only if Do is being called for the
@@ -27,5 +32,11 @@ func New() *Once {
 // without calling f.
 //
 func (o *Once) Do(f func()) {
-
+	select {
+	case o.enterCZ <- struct{}{}:
+		defer close(o.completed)
+		f()
+	case <-o.completed:
+		return
+	}
 }
