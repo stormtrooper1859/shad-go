@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main() {
+func main1() {
 	a := map[string]int{}
 	for i := 0; i < 1024; i++ {
 		a[fmt.Sprintf("ok%d", i)] = i
