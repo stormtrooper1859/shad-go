@@ -162,7 +162,7 @@
       score: 100
     - task: utf8 +
       score: 100
-    - task: varfmt
+    - task: varfmt +
       score: 100
     - task: speller +
       score: 100
