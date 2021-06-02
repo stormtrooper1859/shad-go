@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func main() {
+func main3() {
 	go spinner(100 * time.Millisecond)
 	const n = 45
 	fibN := fib(n) // slow
