@@ -38,4 +38,5 @@ require (
 	gopkg.in/src-d/go-git.v4 v4.13.1
 	gopkg.in/yaml.v2 v2.4.0
 	gopl.io v0.0.0-20200323155855-65c318dde95e
+	github.com/distatus/battery v0.10.0
 )

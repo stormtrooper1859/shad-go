@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main() {
+func main4() {
 	s := "string, строка"
 	for k, v := range s {
 		fmt.Printf("%v %c\n", k, v)
