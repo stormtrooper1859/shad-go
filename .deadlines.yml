@@ -106,13 +106,13 @@
   start:    12-03-2021 22:30
   deadline: 23-03-2021 1:59
   tasks:
-    - task: cond
+    - task: cond -
       score: 100
-    - task: testequal
+    - task: testequal -
       score: 100
-    - task: fileleak
+    - task: fileleak -
       score: 100
-    - task: tabletest
+    - task: tabletest +
       score: 100
     - task: tparallel
       score: 200
