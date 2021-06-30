@@ -41,7 +41,7 @@ func New(l Locker) *Cond {
 //    c.L.Unlock()
 //
 func (c *Cond) Wait() {
-
+	// сделать очередь каналов на которых будут спать горутины
 }
 
 // Signal wakes one goroutine waiting on c, if there is any.
