@@ -95,7 +95,7 @@
   tasks:
     - task: dupcall +
       score: 200
-    - task: keylock
+    - task: keylock +
       score: 200
     - task: batcher
       score: 200
