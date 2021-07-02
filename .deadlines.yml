@@ -97,7 +97,7 @@
       score: 200
     - task: keylock +
       score: 200
-    - task: batcher
+    - task: batcher -+
       score: 200
     - task: pubsub
       score: 300
