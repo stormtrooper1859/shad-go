@@ -99,7 +99,7 @@
       score: 200
     - task: batcher -+
       score: 200
-    - task: pubsub
+    - task: pubsub +-
       score: 300
 
 - group:    Testing
