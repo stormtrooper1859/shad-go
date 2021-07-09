@@ -71,7 +71,7 @@
   start:    25-03-2021 18:00
   deadline: 04-04-2021 23:59
   tasks:
-    - task: urlshortener
+    - task: urlshortener +
       score: 100
     - task: digitalclock
       score: 100

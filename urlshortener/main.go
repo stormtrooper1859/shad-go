@@ -8,24 +8,17 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"math/rand"
 	"net/http"
 	"strconv"
 	"strings"
-	"sync"
 )
 
 var port = flag.Int("port", 8080, "port of server")
 
-var (
-	keysToUrls map[string]string
-	urlsToKeys map[string]string
-	mtx        sync.Mutex
-)
+var dao DAO
 
 func main() {
-	keysToUrls = make(map[string]string)
-	urlsToKeys = make(map[string]string)
+	dao = NewDAO()
 
 	flag.Parse()
 	http.HandleFunc("/shorten", handlerShorten)
@@ -38,28 +31,6 @@ func main() {
 type shortenUrl struct {
 	Url string `json:"url"`
 	Key string `json:"key"`
-}
-
-var (
-	randomMax = 10 + 26*2
-	keyLen    = 10
-)
-
-func genRandomKey() string {
-	sb := strings.Builder{}
-
-	for i := 0; i < keyLen; i++ {
-		n := rand.Intn(randomMax)
-		if n < 10 {
-			sb.WriteByte('0' + byte(n))
-		} else if n < 10+26 {
-			sb.WriteByte('a' + byte(n-10))
-		} else {
-			sb.WriteByte('A' + byte(n-10-26))
-		}
-	}
-
-	return sb.String()
 }
 
 func handlerShorten(w http.ResponseWriter, r *http.Request) {
@@ -76,23 +47,7 @@ func handlerShorten(w http.ResponseWriter, r *http.Request) {
 		_, _ = io.WriteString(w, "invalid request")
 	}
 
-	mtx.Lock()
-
-	key, urlsIsExist := urlsToKeys[su.Url]
-
-	if !urlsIsExist {
-		key = genRandomKey()
-		for _, c := keysToUrls[key]; c; _, c = keysToUrls[key] {
-			key = genRandomKey()
-		}
-
-		keysToUrls[key] = su.Url
-		urlsToKeys[su.Url] = key
-	}
-
-	su.Key = key
-
-	mtx.Unlock()
+	su.Key = dao.GetShortener(su.Url)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(200)
@@ -104,16 +59,8 @@ func handlerGo(w http.ResponseWriter, r *http.Request) {
 	splittedPath := strings.Split(r.URL.Path, "/")
 	queryKey := splittedPath[2]
 
-	fmt.Println(r.URL.Path)
-	fmt.Println(queryKey)
-
-	mtx.Lock()
-
-	url, contain := keysToUrls[queryKey]
-
-	mtx.Unlock()
-
-	if !contain {
+	url, err := dao.GetFullURL(queryKey)
+	if err != nil {
 		w.WriteHeader(404)
 		_, _ = io.WriteString(w, "key not found")
 	}
