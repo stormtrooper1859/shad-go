@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"io/ioutil"
 	"net/http"
-	"net/http/httputil"
 	"regexp"
 	"strings"
 )
@@ -158,28 +157,4 @@ func getBlockedQuery() *http.Response {
 		Body:       ioutil.NopCloser(bytes.NewBufferString("Forbidden")),
 		StatusCode: 403,
 	}
-}
-
-func getHeaderBodyRequest(request *http.Request) (header, body []byte, err error) {
-	header, err = httputil.DumpRequest(request, false)
-	if err != nil {
-		return nil, nil, err
-	}
-	body, err = httputil.DumpRequest(request, true)
-	if err != nil {
-		return nil, nil, err
-	}
-	return body[:len(header)], body[len(header):], nil
-}
-
-func getHeaderBodyResponse(response *http.Response) (header, body []byte, err error) {
-	header, err = httputil.DumpResponse(response, false)
-	if err != nil {
-		return nil, nil, err
-	}
-	body, err = httputil.DumpResponse(response, true)
-	if err != nil {
-		return nil, nil, err
-	}
-	return body[:len(header)], body[len(header):], nil
 }
