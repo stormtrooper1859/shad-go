@@ -6,7 +6,7 @@ import (
 	"github.com/distatus/battery"
 )
 
-func main() {
+func main5() {
 	batteries, err := battery.GetAll()
 	if err != nil {
 		fmt.Println("Could not get battery info!")
