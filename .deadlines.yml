@@ -26,7 +26,7 @@
   start:    15-04-2021 18:00
   deadline: 25-04-2021 23:59
   tasks:
-    - task: illegal
+    - task: illegal +
       score: 100
     - task: blowfish
       score: 100
