@@ -8,30 +8,46 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+	"sync"
 )
+
+var cache sync.Map
 
 func Unpack(req *http.Request, ptr interface{}) error {
 	if err := req.ParseForm(); err != nil {
 		return err
 	}
 
-	fields := make(map[string]reflect.Value)
+	var fields map[string]int
+
 	v := reflect.ValueOf(ptr).Elem()
-	for i := 0; i < v.NumField(); i++ {
-		fieldInfo := v.Type().Field(i)
-		tag := fieldInfo.Tag
-		name := tag.Get("http")
-		if name == "" {
-			name = strings.ToLower(fieldInfo.Name)
+	fieldsAny, contain := cache.Load(v.Type())
+
+	if !contain {
+		fields = make(map[string]int)
+
+		for i := 0; i < v.NumField(); i++ {
+			fieldInfo := v.Type().Field(i)
+			tag := fieldInfo.Tag
+			name := tag.Get("http")
+			if name == "" {
+				name = strings.ToLower(fieldInfo.Name)
+			}
+			fields[name] = i
 		}
-		fields[name] = v.Field(i)
+
+		cache.Store(v.Type(), fields)
+	} else {
+		fields = fieldsAny.(map[string]int)
 	}
 
 	for name, values := range req.Form {
-		f, ok := fields[name]
+		fieldNumber, ok := fields[name]
 		if !ok {
 			continue
 		}
+
+		f := v.Field(fieldNumber)
 
 		for _, value := range values {
 			if f.Kind() == reflect.Slice {
