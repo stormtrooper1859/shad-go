@@ -7,7 +7,7 @@ import (
 
 )
 
-func main() {
+func main6() {
 	var w io.Writer
 	fmt.Println(reflect.TypeOf(w))
 
