@@ -53,7 +53,7 @@
       score: 100
     - task: jsonrpc
       score: 100
-    - task: structtags
+    - task: structtags +
       score: 100
 
 - group: April Fools' Day
