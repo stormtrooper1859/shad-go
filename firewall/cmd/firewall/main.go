@@ -35,7 +35,7 @@ func main() {
 	reverseProxy := httputil.NewSingleHostReverseProxy(parsedUrl)
 	reverseProxy.Transport = firewall.NewFirewall(config)
 
-	http.HandleFunc("/", reverseProxy.ServeHTTP)
+	http.Handle("/", reverseProxy)
 	err = http.ListenAndServe(*firewallAddr, nil)
 	if err != nil {
 		fmt.Println(err)
